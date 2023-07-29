@@ -1,0 +1,36 @@
+{
+  "dataset": {
+    "name": "scs_mouse_brain",
+    "loc": "SCS",
+    "patch_size": 1200,
+    "bin_size": 3,
+    "n_neighbor": 50,
+    "max_patch_num": 1
+  },
+  "model": {
+    "name": "scs",
+    "use_amp": false,
+    "use_sam": false,
+    "arch": {
+      "class_num": 16,
+      "input_shape": 2000,
+      "input_position_shape": 2,
+      "projection_dim": 64,
+      "num_heads": 1,
+      "transformer_units": 128,
+      "transformer_layers": 8,
+      "mlp_head_units": [1024, 256]
+    },
+    "optimizer": {
+      "name": "adamw",
+      "lr": 0.001,
+      "weight_decay": 0.0001
+    },
+    "schedulers": null
+  },
+  "training": {
+    "num_epochs": 1,
+    "batch_size": 10
+  }
+
+}
