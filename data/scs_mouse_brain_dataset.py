@@ -80,7 +80,6 @@ class SCSMouseBrainDataset(BaseDataset):
 
         startx = str(startx)
         starty = str(starty)
-        patchsize = str(patch_size)
 
         adatasub.layers['unspliced'] = adatasub.X
         patch_size_x = adatasub.X.shape[0]
@@ -343,7 +342,6 @@ class SCSMouseBrainDataset(BaseDataset):
 
         x_test = np.array(x_test)
         x_test_pos = np.array(x_test_pos)
-
         return x_train, x_train_pos, y_train, y_binary_train, x_test, x_test_pos
 
 class PerPatchDataset(BaseDataset):
@@ -361,8 +359,13 @@ class PerPatchDataset(BaseDataset):
         # }
         self.patch_dict = processed_patch_dict
         self.mode = 'train'
-        for k in processed_patch_dict.keys():
-            processed_patch_dict[k] = torch.from_numpy(processed_patch_dict[k])
+
+        self.patch_dict["x_train"] = torch.from_numpy(self.patch_dict["x_train"])
+        self.patch_dict["x_train_pos"] = torch.from_numpy(self.patch_dict["x_train_pos"])
+        self.patch_dict["y_train"] = torch.from_numpy(self.patch_dict["y_train"])
+        self.patch_dict["y_binary_train"] = torch.from_numpy(self.patch_dict["y_binary_train"])
+        self.patch_dict["x_test"] = torch.from_numpy(self.patch_dict["x_test"])
+        self.patch_dict["x_test_pos"] = torch.from_numpy(self.patch_dict["x_test_pos"])
 
     def set_mode(self, mode):
         # Must be setup after init

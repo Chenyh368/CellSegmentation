@@ -56,6 +56,10 @@ def main(opt, manager):
             )
 
             for x_train, x_train_pos, y_train, y_binary_train in per_patch_loader:
+                for i in range(len(x_train_pos)):
+                    for j in range(1, len(x_train_pos[i])):
+                        x_train_pos[i][j] = x_train_pos[i][j] - x_train_pos[i][0]
+                    x_train_pos[i][0] = x_train_pos[i][0] - x_train_pos[i][0]
                 for i in range(len(y_train)):
                     if y_train[i][0] != -1:
                         y_train[i] = y_train[i] - x_train_pos[i][0]
@@ -63,9 +67,10 @@ def main(opt, manager):
                         y_train[i][0] = -9999
                         y_train[i][1] = -9999
                 y_train = dir_to_class(y_train, opt.model.arch.class_num)
+                y_train = torch.from_numpy(y_train)
                 losses, predictions = model.train_step({
-                    'x': [x_train, x_train_pos],
-                    'y': [y_train, y_binary_train]
+                    'x': [x_train.float(), x_train_pos.float()],
+                    'y': [y_train, y_binary_train.unsqueeze(1).float()]
                 })
                 total_num_steps += 1
                 logger.info(f"iter {total_num_steps}| {losses}")

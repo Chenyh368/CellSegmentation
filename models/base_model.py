@@ -146,7 +146,7 @@ class BaseModel(nn.Module):
         else:
             self.optimizer.zero_grad()
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(self.parameters(), self.clipping_value)
+            # torch.nn.utils.clip_grad_norm_(self.parameters(), self.clipping_value)
             self.optimizer.step()
 
         for scheduler in self.schedulers.values():

@@ -5,7 +5,7 @@
     "patch_size": 1200,
     "bin_size": 3,
     "n_neighbor": 50,
-    "max_patch_num": 1
+    "max_patch_num": 3
   },
   "model": {
     "name": "scs",
